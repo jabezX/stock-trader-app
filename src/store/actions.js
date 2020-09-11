@@ -2,9 +2,11 @@ import Vue from 'vue'
 
 export const loadData = ({commit}) => {
     commit('SHOW_OVERLAY');
-    Vue.http.get('data.json').then(
-        response  => response.json()
-        ).then(
+    Vue.http.get('data.json').then( (response) => {
+        const returnedData = response;
+        commit('HIDE_OVERLAY');
+        return returnedData.json();})
+        .then(
         data => {
             if(data){
                 const stocks = data.stocks;
@@ -21,5 +23,5 @@ export const loadData = ({commit}) => {
             }
         }
     )
-    commit('HIDE_OVERLAY');
+    
 }
